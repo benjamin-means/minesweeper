@@ -138,6 +138,15 @@ function startGame() {
 // 2. Are all of the mines marked?
 function checkForWin() {
   for (var i = 0; i < board.cells.length; i++) {
+    if (
+      board.cells[i].isMine == true &&
+      board.cells[i].isMarked == false &&
+      board.cells[i].hidden == false
+    ) {
+      if (confirm("You Lose")) {
+        window.location.reload();
+      }
+    }
     if (board.cells[i].isMine == true && board.cells[i].isMarked != true) {
       return;
     }
