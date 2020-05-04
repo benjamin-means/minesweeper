@@ -4,84 +4,123 @@ document.addEventListener("DOMContentLoaded", startGame);
 
 // Stretch material
 
-function createBoard() {
-  var board = {
-    cells: [
-      {
-        row: 0,
-        col: 0,
-        isMine: false,
-        hidden: true,
-      },
-      {
-        row: 0,
-        col: 1,
-        isMine: false,
-        hidden: true,
-      },
-      {
-        row: 0,
-        col: 2,
-        isMine: false,
-        hidden: true,
-      },
-      {
-        row: 1,
-        col: 0,
-        isMine: false,
-        hidden: true,
-      },
-      {
-        row: 1,
-        col: 1,
-        isMine: false,
-        hidden: true,
-      },
-      {
-        row: 1,
-        col: 2,
-        isMine: false,
-        hidden: true,
-      },
-      {
-        row: 2,
-        col: 0,
-        isMine: false,
-        hidden: true,
-      },
-      {
-        row: 2,
-        col: 1,
-        isMine: false,
-        hidden: true,
-      },
-      {
-        row: 2,
-        col: 2,
-        isMine: false,
-        hidden: true,
-      },
-    ],
+function cells(row, col, isMine, isMarked, hidden) {
+  return {
+    // id: row + "" + col,
+    row: row,
+    col: col,
+    isMine: isMine,
+    isMarked: isMarked,
+    hidden: hidden,
   };
+}
+
+function createBoard(boardSize) {
+  var board = {};
+  var myCell = [];
+  for (var row = 0; row < boardSize; row++) {
+    for (var col = 0; col < boardSize; col++) {
+      myCell.push(cells(row, col, false, false, true));
+    }
+  }
+  board.cells = myCell;
+  // console.log(board);
   var isMineTrueCount = 0;
-  while (isMineTrueCount < 5) {
+  while (isMineTrueCount < 15) {
     for (var i = 0; i < board.cells.length; i++) {
-      if (board.cells[i].isMine == false && isMineTrueCount < 5) {
+      if (board.cells[i].isMine == false && isMineTrueCount < 15) {
         board.cells[i].isMine = Math.random() >= 0.5;
         if (board.cells[i].isMine == true) {
           isMineTrueCount++;
         }
       }
-      console.log(isMineTrueCount);
-      console.log(board.cells[i].isMine);
+      // console.log(isMineTrueCount);
+      // console.log(board.cells[i].isMine);
     }
   }
-
   return board;
 }
+
+var board = createBoard(6);
+
+// function createBoard() {
+//   var board = {
+//     cells: [
+//       {
+//         row: 0,
+//         col: 0,
+//         isMine: false,
+//         hidden: true,
+//       },
+//       {
+//         row: 0,
+//         col: 1,
+//         isMine: false,
+//         hidden: true,
+//       },
+//       {
+//         row: 0,
+//         col: 2,
+//         isMine: false,
+//         hidden: true,
+//       },
+//       {
+//         row: 1,
+//         col: 0,
+//         isMine: false,
+//         hidden: true,
+//       },
+//       {
+//         row: 1,
+//         col: 1,
+//         isMine: false,
+//         hidden: true,
+//       },
+//       {
+//         row: 1,
+//         col: 2,
+//         isMine: false,
+//         hidden: true,
+//       },
+//       {
+//         row: 2,
+//         col: 0,
+//         isMine: false,
+//         hidden: true,
+//       },
+//       {
+//         row: 2,
+//         col: 1,
+//         isMine: false,
+//         hidden: true,
+//       },
+//       {
+//         row: 2,
+//         col: 2,
+//         isMine: false,
+//         hidden: true,
+//       },
+//     ],
+//   };
+//   var isMineTrueCount = 0;
+//   while (isMineTrueCount < 5) {
+//     for (var i = 0; i < board.cells.length; i++) {
+//       if (board.cells[i].isMine == false && isMineTrueCount < 5) {
+//         board.cells[i].isMine = Math.random() >= 0.5;
+//         if (board.cells[i].isMine == true) {
+//           isMineTrueCount++;
+//         }
+//       }
+//       console.log(isMineTrueCount);
+//       console.log(board.cells[i].isMine);
+//     }
+//   }
+
+//   return board;
+// }
 // board.cells[i].isMine = Math.random() >= 0.5;
 
-var board = createBoard();
+// var board = createBoard();
 
 function startGame() {
   for (var i = 0; i < board.cells.length; i++) {
