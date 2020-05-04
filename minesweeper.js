@@ -26,9 +26,9 @@ function createBoard(boardSize) {
   board.cells = myCell;
   // console.log(board);
   var isMineTrueCount = 0;
-  while (isMineTrueCount < 15) {
+  while (isMineTrueCount < 1) {
     for (var i = 0; i < board.cells.length; i++) {
-      if (board.cells[i].isMine == false && isMineTrueCount < 15) {
+      if (board.cells[i].isMine == false && isMineTrueCount < 1) {
         board.cells[i].isMine = Math.random() >= 0.5;
         if (board.cells[i].isMine == true) {
           isMineTrueCount++;
@@ -147,6 +147,10 @@ function checkForWin() {
   }
   // You can use this function call to declare a winner (once you've
   // detected that they've won, that is!)
+  if (confirm("You Win!")) {
+    window.location.reload();
+  }
+
   lib.displayMessage("You win!");
 }
 
