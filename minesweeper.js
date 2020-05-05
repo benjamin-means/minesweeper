@@ -26,9 +26,9 @@ function createBoard(boardSize) {
   board.cells = myCell;
   // console.log(board);
   var isMineTrueCount = 0;
-  while (isMineTrueCount < 1) {
+  while (isMineTrueCount < 5) {
     for (var i = 0; i < board.cells.length; i++) {
-      if (board.cells[i].isMine == false && isMineTrueCount < 1) {
+      if (board.cells[i].isMine == false && isMineTrueCount < 5) {
         board.cells[i].isMine = Math.random() >= 0.5;
         if (board.cells[i].isMine == true) {
           isMineTrueCount++;
@@ -42,85 +42,6 @@ function createBoard(boardSize) {
 }
 
 var board = createBoard(6);
-
-// function createBoard() {
-//   var board = {
-//     cells: [
-//       {
-//         row: 0,
-//         col: 0,
-//         isMine: false,
-//         hidden: true,
-//       },
-//       {
-//         row: 0,
-//         col: 1,
-//         isMine: false,
-//         hidden: true,
-//       },
-//       {
-//         row: 0,
-//         col: 2,
-//         isMine: false,
-//         hidden: true,
-//       },
-//       {
-//         row: 1,
-//         col: 0,
-//         isMine: false,
-//         hidden: true,
-//       },
-//       {
-//         row: 1,
-//         col: 1,
-//         isMine: false,
-//         hidden: true,
-//       },
-//       {
-//         row: 1,
-//         col: 2,
-//         isMine: false,
-//         hidden: true,
-//       },
-//       {
-//         row: 2,
-//         col: 0,
-//         isMine: false,
-//         hidden: true,
-//       },
-//       {
-//         row: 2,
-//         col: 1,
-//         isMine: false,
-//         hidden: true,
-//       },
-//       {
-//         row: 2,
-//         col: 2,
-//         isMine: false,
-//         hidden: true,
-//       },
-//     ],
-//   };
-//   var isMineTrueCount = 0;
-//   while (isMineTrueCount < 5) {
-//     for (var i = 0; i < board.cells.length; i++) {
-//       if (board.cells[i].isMine == false && isMineTrueCount < 5) {
-//         board.cells[i].isMine = Math.random() >= 0.5;
-//         if (board.cells[i].isMine == true) {
-//           isMineTrueCount++;
-//         }
-//       }
-//       console.log(isMineTrueCount);
-//       console.log(board.cells[i].isMine);
-//     }
-//   }
-
-//   return board;
-// }
-// board.cells[i].isMine = Math.random() >= 0.5;
-
-// var board = createBoard();
 
 function startGame() {
   for (var i = 0; i < board.cells.length; i++) {
@@ -138,26 +59,24 @@ function startGame() {
 // 2. Are all of the mines marked?
 function checkForWin() {
   for (var i = 0; i < board.cells.length; i++) {
-    if (
-      board.cells[i].isMine == true &&
-      board.cells[i].isMarked == false &&
-      board.cells[i].hidden == false
-    ) {
-      if (confirm("You Lose")) {
-        window.location.reload();
-      }
-    }
     if (board.cells[i].isMine == true && board.cells[i].isMarked != true) {
       return;
     }
+
     if (board.cells[i].isMine == false && board.cells[i].hidden == true) {
       return;
     }
   }
-  // You can use this function call to declare a winner (once you've
-  // detected that they've won, that is!)
-  if (confirm("You Win!")) {
-    window.location.reload();
+  {
+    // You can use this function call to declare a winner (once you've
+    // detected that they've won, that is!)
+    var winSound = document.getElementById("winSound");
+    winSound.play();
+    setTimeout(function () {
+      if (confirm("You Win!")) {
+        window.location.reload();
+      }
+    }, 4000);
   }
 
   lib.displayMessage("You win!");
