@@ -26,10 +26,10 @@ function createBoard(boardSize) {
   board.cells = myCell;
   // console.log(board);
   var isMineTrueCount = 0;
-  while (isMineTrueCount < 5) {
+  while (isMineTrueCount < 12) {
     for (var i = 0; i < board.cells.length; i++) {
-      if (board.cells[i].isMine == false && isMineTrueCount < 5) {
-        board.cells[i].isMine = Math.random() >= 0.5;
+      if (board.cells[i].isMine == false && isMineTrueCount < 12) {
+        board.cells[i].isMine = Math.random() >= 0.7;
         if (board.cells[i].isMine == true) {
           isMineTrueCount++;
         }
