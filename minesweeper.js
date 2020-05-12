@@ -3,6 +3,11 @@ document.addEventListener("DOMContentLoaded", startGame);
 // Define your `board` object here!
 
 // Game boards && reset button
+// Make it so you can't lose on first click
+// Add a reset game button
+// Add a timer
+// Add a flag count that decreases as you place them
+// Add Difficulty levels
 
 // function resetGame() {
 //   console.log("clicking works");
