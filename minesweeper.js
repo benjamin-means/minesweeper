@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", startGame);
 
 // Stretch material
 
+// Game boards
+
 function cells(row, col, isMine, isMarked, hidden) {
   return {
     // id: row + "" + col,
@@ -26,9 +28,9 @@ function createBoard(boardSize) {
   board.cells = myCell;
   // console.log(board);
   var isMineTrueCount = 0;
-  while (isMineTrueCount < 5) {
+  while (isMineTrueCount < 2) {
     for (var i = 0; i < board.cells.length; i++) {
-      if (board.cells[i].isMine == false && isMineTrueCount < 5) {
+      if (board.cells[i].isMine == false && isMineTrueCount < 2) {
         board.cells[i].isMine = Math.random() >= 0.7;
         if (board.cells[i].isMine == true) {
           isMineTrueCount++;
@@ -41,7 +43,7 @@ function createBoard(boardSize) {
   return board;
 }
 
-var board = createBoard(4);
+var board = createBoard(3);
 
 function startGame() {
   for (var i = 0; i < board.cells.length; i++) {
@@ -49,22 +51,36 @@ function startGame() {
     cell.surroundingMines = countSurroundingMines(cell);
   }
   document.addEventListener("click", checkForWin);
+  document.addEventListener("click", checkForLoss);
   document.addEventListener("contextmenu", checkForWin);
   // Don't remove this function call: it makes the game work!
   lib.initBoard();
 }
 
-// Define this function to look for a win condition:
-//
-// 1. Are all of the cells that are NOT mines visible?
-// 2. Are all of the mines marked?
+// Function to check for loss
+function checkForLoss(e) {
+  var e = event.target;
+  if (e.classList[2] == "mine") {
+    console.log("Lost");
+    var lostSound = document.getElementById("loseSound");
+    lostSound.play();
+    setTimeout(function () {
+      if (confirm("KA B00M!")) {
+        window.location.reload();
+      }
+    }, 4000);
+  }
+}
+
 function checkForWin() {
   for (var i = 0; i < board.cells.length; i++) {
-    if (board.cells[i].isMine == true && board.cells[i].isMarked != true) {
+    var cell = board.cells[i];
+
+    if (cell.isMine == true && cell.isMarked != true) {
       return;
     }
 
-    if (board.cells[i].isMine == false && board.cells[i].hidden == true) {
+    if (cell.isMine == false && cell.hidden == true) {
       return;
     }
   }
