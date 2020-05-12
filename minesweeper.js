@@ -2,9 +2,15 @@ document.addEventListener("DOMContentLoaded", startGame);
 
 // Define your `board` object here!
 
-// Stretch material
+// Game boards && reset button
 
-// Game boards
+// function resetGame() {
+//   console.log("clicking works");
+//   var board = document.getElementById("gameBoard");
+//   board.classList.remove("board");
+//   board.classList.add("board");
+//   startGame();
+// }
 
 function cells(row, col, isMine, isMarked, hidden) {
   return {
@@ -28,11 +34,12 @@ function createBoard(boardSize) {
   board.cells = myCell;
   // console.log(board);
   var isMineTrueCount = 0;
-  while (isMineTrueCount < 2) {
+  while (isMineTrueCount < 5) {
     for (var i = 0; i < board.cells.length; i++) {
-      if (board.cells[i].isMine == false && isMineTrueCount < 2) {
-        board.cells[i].isMine = Math.random() >= 0.7;
-        if (board.cells[i].isMine == true) {
+      var cell = board.cells[i];
+      if (cell.isMine == false && isMineTrueCount < 5) {
+        cell.isMine = Math.random() >= 0.7;
+        if (cell.isMine == true) {
           isMineTrueCount++;
         }
       }
@@ -43,7 +50,7 @@ function createBoard(boardSize) {
   return board;
 }
 
-var board = createBoard(3);
+var board = createBoard(4);
 
 function startGame() {
   for (var i = 0; i < board.cells.length; i++) {
@@ -52,16 +59,19 @@ function startGame() {
   }
   document.addEventListener("click", checkForWin);
   document.addEventListener("click", checkForLoss);
+  // document.getElementById("resetGame").addEventListener("click", resetGame);
   document.addEventListener("contextmenu", checkForWin);
   // Don't remove this function call: it makes the game work!
   lib.initBoard();
 }
 
 // Function to check for loss
-function checkForLoss(e) {
-  var e = event.target;
-  if (e.classList[2] == "mine") {
-    console.log("Lost");
+// Improved lost game function
+function checkForLoss() {
+  var e = event.target.classList;
+  // e returns node list that needs to be converted to array before 'includes()' can be used.
+  var classArray = Array.from(e);
+  if (classArray.includes("mine")) {
     var lostSound = document.getElementById("loseSound");
     lostSound.play();
     setTimeout(function () {
@@ -70,6 +80,19 @@ function checkForLoss(e) {
       }
     }, 4000);
   }
+  // Original lost game function
+  // var e = event.target;
+  // if (e.classList[2] == "mine") {
+  //   console.log(event);
+  //   console.log("Lost");
+  //   var lostSound = document.getElementById("loseSound");
+  //   lostSound.play();
+  //   setTimeout(function () {
+  //     if (confirm("KA B00M!")) {
+  //       window.location.reload();
+  //     }
+  //   }, 4000);
+  // }
 }
 
 function checkForWin() {
