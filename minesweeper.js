@@ -26,9 +26,9 @@ function createBoard(boardSize) {
   board.cells = myCell;
   // console.log(board);
   var isMineTrueCount = 0;
-  while (isMineTrueCount < 12) {
+  while (isMineTrueCount < 5) {
     for (var i = 0; i < board.cells.length; i++) {
-      if (board.cells[i].isMine == false && isMineTrueCount < 12) {
+      if (board.cells[i].isMine == false && isMineTrueCount < 5) {
         board.cells[i].isMine = Math.random() >= 0.7;
         if (board.cells[i].isMine == true) {
           isMineTrueCount++;
@@ -41,11 +41,12 @@ function createBoard(boardSize) {
   return board;
 }
 
-var board = createBoard(6);
+var board = createBoard(4);
 
 function startGame() {
   for (var i = 0; i < board.cells.length; i++) {
-    board.cells[i].surroundingMines = countSurroundingMines(board.cells[i]);
+    var cell = board.cells[i];
+    cell.surroundingMines = countSurroundingMines(cell);
   }
   document.addEventListener("click", checkForWin);
   document.addEventListener("contextmenu", checkForWin);
@@ -68,8 +69,6 @@ function checkForWin() {
     }
   }
   {
-    // You can use this function call to declare a winner (once you've
-    // detected that they've won, that is!)
     var winSound = document.getElementById("winSound");
     winSound.play();
     setTimeout(function () {
@@ -79,6 +78,8 @@ function checkForWin() {
     }, 4000);
   }
 
+  // You can use this function call to declare a winner (once you've
+  // detected that they've won, that is!)
   lib.displayMessage("You win!");
 }
 
@@ -94,9 +95,10 @@ function countSurroundingMines(cell) {
   var count = 0;
   var surrounding = lib.getSurroundingCells(cell.row, cell.col);
   for (var i = 0; i < surrounding.length; i++) {
-    if (surrounding[i].isMine == true) {
+    var cell = surrounding[i];
+    if (cell.isMine == true) {
       count++;
     }
-    return count;
   }
+  return count;
 }
